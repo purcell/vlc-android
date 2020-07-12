@@ -236,7 +236,7 @@ init_local_props() {
 }
 init_local_props local.properties || { echo "Error initializing local.properties"; exit $?; }
 
-if [ ! -d "$ANDROID_SDK/licenses" ]; then
+if [ ! -d "$ANDROID_SDK/licenses" ] && [ -z "$IN_NIX_SHELL" ]; then
     mkdir "$ANDROID_SDK/licenses"
     echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_SDK/licenses/android-sdk-license"
     echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> "$ANDROID_SDK/licenses/android-sdk-license"
@@ -247,7 +247,7 @@ fi
 # GRADLE #
 ##########
 
-if [ ! -d "gradle/wrapper" ]; then
+if [ ! -d "gradle/wrapper" ] && [ -z "$IN_NIX_SHELL" ]; then
     diagnostic "Downloading gradle"
     GRADLE_VERSION=6.1.1
     GRADLE_URL=https://download.videolan.org/pub/contrib/gradle/gradle-${GRADLE_VERSION}-bin.zip
